@@ -50,26 +50,6 @@ let grandmaInterval = setInterval(() => {
     cookieCount.textContent = cookie;
 }, 1000);
 
-const farmButton = document.getElementById('farm');
-const farmCount = document.getElementById('farmcount');
-let farmCost = 400;
-let farmOwned = 0;
-
-farmButton.addEventListener('click', () => {
-    if (cookie >= farmCost) {
-        cookie -= farmCost;
-        farmOwned++;
-        farmCount.textContent = farmOwned;
-        farmCost += 250;
-        farmButton.textContent = `Stars: ${farmCost} stardust`;
-    }
-});
-
-let farmInterval = setInterval(() => {
-    cookie += 40 * farmOwned;
-    cookieCount.textContent = cookie;
-}, 1000);
-
 const starButton = document.getElementById('star');
 const starCount = document.getElementById('starcOUNT');
 let starCost = 600;
@@ -81,7 +61,7 @@ starButton.addEventListener('click', () => {
         starOwned++;
         starCount.textContent = starOwned;
         starCost += 300;
-        starButton.textContent = `Star: ${starCost} stardust`;
+        starButton.textContent = `Stars: ${starCost} stardust`;
     }
 });
 
@@ -190,8 +170,8 @@ let superclusterInterval = setInterval(() => {
     cookieCount.textContent = cookie;
 }, 1000);
 
-const TheObservableUniverseButton = document.getElementById('The observable universe');
-const TheObservableUniverseCount = document.getElementById('The observable universecount');
+const TheObservableUniverseButton = document.getElementById('The Observable Universe');
+const TheObservableUniverseCount = document.getElementById('The Observable Universecount');
 let TheObservableUniverseCost = 100000;
 let TheObservableUniverseOwned = 0;
 
@@ -232,3 +212,4 @@ let multiverseInterval = setInterval(() => {
     cookie += 15000 * multiverseOwned;
     cookieCount.textContent = cookie;
 }, 1000);
+
