@@ -1,0 +1,41 @@
+.game-layout {
+	display: grid;
+	grid-template-columns: 1fr  minmax(280px, 360px);
+	gap: 48px;
+	min-height: 100vh;
+	padding: 32px;
+	box-sizing: border-box;
+}
+
+.cookie-area {
+	align-self: start;
+}
+
+.shop {
+	border-left: 1px solid #cccccc;
+	padding-left: 32px;
+}
+
+button {
+	display: block;
+	margin: 12px 0 4px;
+	padding: 8px 12px;
+}
+
+p {
+	margin: 4px 0 18px;
+}
+
+@media (max-width: 700px) {
+	.game-layout {
+		grid-template-columns: 1fr;
+		gap: 24px;
+	}
+
+	.shop-area {
+		border-left: 0;
+		border-top: 1px solid #cccccc;
+		padding-left: 0;
+		padding-top: 24px;
+	}
+}
