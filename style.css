@@ -21,6 +21,39 @@ button {
 	display: block;
 	margin: 12px 0 4px;
 	padding: 8px 12px;
+	cursor: pointer;
+	transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+}
+
+button:hover,
+button:focus-visible {
+	transform: translateY(-2px) scale(1.02);
+	box-shadow: 0 0 16px rgba(255, 220, 100, 0.8);
+}
+
+button:active {
+	transform: scale(0.96);
+}
+
+.upgrade-purchased {
+	animation: upgrade-purchased 450ms ease;
+}
+
+@keyframes upgrade-purchased {
+	0% {
+		background-color: #ffffff;
+		box-shadow: 0 0 0 rgba(255, 220, 100, 0);
+	}
+	45% {
+		background-color: #ffe36e;
+		box-shadow: 0 0 28px rgba(255, 220, 100, 1);
+		transform: scale(1.08);
+	}
+	100% {
+		background-color: initial;
+		box-shadow: 0 0 0 rgba(255, 220, 100, 0);
+		transform: scale(1);
+	}
 }
 
 p {

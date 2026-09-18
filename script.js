@@ -4,6 +4,12 @@ let cookiePerClick = 1;
 const cookieButton = document.getElementById('cookiebutton');
 const cookieCount = document.getElementById('cookiecount');
 
+function showUpgradeEffect(button) {
+    button.classList.remove('upgrade-purchased');
+    void button.offsetWidth;
+    button.classList.add('upgrade-purchased');
+}
+
 cookieButton.addEventListener('click', () => {
     cookie += cookiePerClick;
     cookieCount.textContent = cookie;
@@ -25,6 +31,7 @@ upgradeButton.addEventListener('click', () => {
         upgradeCount.textContent = upgradesOwned;
         cookieCount.textContent = cookie;
         upgradeButton.textContent = `Upgrade klik: ${upgradeCost} stardust`;
+        showUpgradeEffect(upgradeButton);
     }
 });
 
@@ -42,6 +49,7 @@ grandmaButton.addEventListener('click', () => {
         grandmaCount.textContent = grandmaOwned;
         grandmaCost += 50;
         grandmaButton.textContent = `Asteroids: ${grandmaCost} stardust`;
+        showUpgradeEffect(grandmaButton);
     }
 });
 
@@ -62,6 +70,7 @@ starButton.addEventListener('click', () => {
         starCount.textContent = starOwned;
         starCost += 300;
         starButton.textContent = `Stars: ${starCost} stardust`;
+        showUpgradeEffect(starButton);
     }
 });
 
@@ -82,6 +91,7 @@ factoryButton.addEventListener('click', () => {
         factoryCount.textContent = factoryOwned;
         factoryCost += 500;
         factoryButton.textContent = `Nebulas: ${factoryCost} stardust`;
+        showUpgradeEffect(factoryButton);
     }
 });
 
@@ -102,6 +112,7 @@ GalaxiesButton.addEventListener('click', () => {
         GalaxiesCount.textContent = GalaxiesOwned;
         GalaxiesCost += 1200;
         GalaxiesButton.textContent = `Galaxies: ${GalaxiesCost} stardust`;
+        showUpgradeEffect(GalaxiesButton);
     }
 });
 
@@ -122,6 +133,7 @@ BlackHolesButton.addEventListener('click', () => {
         BlackHolesCount.textContent = BlackHolesOwned;
         BlackHolesCost += 2600;
         BlackHolesButton.textContent = `Black Holes: ${BlackHolesCost} stardust`;
+        showUpgradeEffect(BlackHolesButton);
     }
 });
 
@@ -142,6 +154,7 @@ GalaxyClustersButton.addEventListener('click', () => {
         GalaxyClustersCount.textContent = GalaxyClustersOwned;
         GalaxyClustersCost += 3000;
         GalaxyClustersButton.textContent = `Galaxy Clusters: ${GalaxyClustersCost} stardust`;
+        showUpgradeEffect(GalaxyClustersButton);
     }
 });
 
@@ -162,6 +175,7 @@ superclusterButton.addEventListener('click', () => {
         superclusterCount.textContent = superclusterOwned;
         superclusterCost += 5000;
         superclusterButton.textContent = `Superclusters: ${superclusterCost} stardust`;
+        showUpgradeEffect(superclusterButton);
     }
 });
 
@@ -182,6 +196,7 @@ TheObservableUniverseButton.addEventListener('click', () => {
         TheObservableUniverseCount.textContent = TheObservableUniverseOwned;
         TheObservableUniverseCost += 10000;
         TheObservableUniverseButton.textContent = `The Observable Universe: ${TheObservableUniverseCost} stardust`;
+        showUpgradeEffect(TheObservableUniverseButton);
     }
 });
 
@@ -205,6 +220,7 @@ multiverseButton.addEventListener('click', () => {
         multiverseCost += 25000;
         multiverseButton.textContent = `Multiverse: ${multiverseCost} stardust`;
         cookieCount.textContent = cookie;
+        showUpgradeEffect(multiverseButton);
     }
 });
 
