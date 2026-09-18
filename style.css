@@ -10,6 +10,7 @@
 
 .cookie-area {
 	align-self: start;
+	text-align: center;
 }
 
 .shop {
@@ -58,6 +59,23 @@ button:active {
 
 p {
 	margin: 4px 0 18px;
+}
+
+.stardust-image {
+    display: block;
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: transform 0.12s ease;
+    margin: 12px auto;
+    position: relative;
+    z-index: 1;
+}
+
+.stardust-image:hover {
+    transform: scale(1.03);
 }
 
 @media (max-width: 700px) {
