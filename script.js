@@ -70,9 +70,14 @@ class Game {
         this.cookiePerClick = 1;
         this.cookieButton = document.getElementById('cookiebutton');
         this.cookieCount = document.getElementById('cookiecount');
+        this.saveButton = document.getElementById('savegame');
+        this.loadButton = document.getElementById('loadgame');
+        this.saveStatus = document.getElementById('savestatus');
         this.upgrades = [];
 
         this.cookieButton.addEventListener('click', () => this.clickForStardust());
+        this.saveButton.addEventListener('click', () => this.saveGame());
+        this.loadButton.addEventListener('click', () => this.loadGame());
         this.createUpgrades();
         this.renderStardust();
         setInterval(() => this.collectProduction(), 1000);
@@ -115,6 +120,61 @@ class Game {
 
     renderStardust() {
         this.cookieCount.textContent = this.stardust;
+    }
+
+    saveGame() {
+        const saveData = {
+            stardust: this.stardust,
+            cookiePerClick: this.cookiePerClick,
+            upgrades: this.upgrades.map(upgrade => ({
+                owned: upgrade.owned,
+                cost: upgrade.cost
+            }))
+        };
+
+        localStorage.setItem('stardustClickerSave', JSON.stringify(saveData));
+        this.showSaveStatus('Game saved');
+    }
+
+    loadGame() {
+        const savedGame = localStorage.getItem('stardustClickerSave');
+
+        if (!savedGame) {
+            this.showSaveStatus('No saved game found');
+            return;
+        }
+
+        try {
+            const saveData = JSON.parse(savedGame);
+            this.stardust = Number(saveData.stardust) || 0;
+            this.cookiePerClick = Number(saveData.cookiePerClick) || 1;
+
+            if (Array.isArray(saveData.upgrades)) {
+                this.upgrades.forEach((upgrade, index) => {
+                    const savedUpgrade = saveData.upgrades[index];
+                    if (!savedUpgrade) {
+                        return;
+                    }
+
+                    upgrade.owned = Number(savedUpgrade.owned) || 0;
+                    upgrade.cost = Number(savedUpgrade.cost) || upgrade.cost;
+                    upgrade.render();
+                });
+            }
+
+            this.renderStardust();
+            this.showSaveStatus('Game loaded');
+        } catch {
+            this.showSaveStatus('Saved game is invalid');
+        }
+    }
+
+    showSaveStatus(message) {
+        this.saveStatus.textContent = message;
+        clearTimeout(this.statusTimeout);
+        this.statusTimeout = setTimeout(() => {
+            this.saveStatus.textContent = '';
+        }, 2500);
     }
 }
 
