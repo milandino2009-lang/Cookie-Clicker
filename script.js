@@ -66,25 +66,22 @@ class Game {
         this.cookiePerClick = 1;
         this.cookieButton = document.getElementById('cookiebutton');
         this.cookieCount = document.getElementById('cookiecount');
-<<<<<<< HEAD
         this.saveButton = document.getElementById('savegame');
         this.loadButton = document.getElementById('loadgame');
         this.saveStatus = document.getElementById('savestatus');
+        this.quicktimeStatus = document.getElementById('quicktime-status');
+        this.themeToggle = document.getElementById('theme-toggle');
+        this.starSkinToggle = document.getElementById('star-skin-toggle');
+        this.backgroundImage = document.getElementById('background-image');
+        this.useStarV2 = false;
+        this.clickPowerMultiplier = 1;
         this.upgrades = [];
 
         this.cookieButton.addEventListener('click', () => this.clickForStardust());
         this.saveButton.addEventListener('click', () => this.saveGame());
         this.loadButton.addEventListener('click', () => this.loadGame());
-=======
-        this.quicktimeStatus = document.getElementById('quicktime-status');
-        this.themeToggle = document.getElementById('theme-toggle');
-        this.backgroundImage = document.getElementById('background-image');
-        this.clickPowerMultiplier = 1;
-        this.upgrades = [];
-
-        this.cookieButton.addEventListener('click', () => this.clickForStardust());
         this.themeToggle.addEventListener('click', () => this.toggleBackground());
->>>>>>> df2b9e1 (achtergrond toggle en quick time event)
+        this.starSkinToggle.addEventListener('click', () => this.toggleStarSkin());
         this.createUpgrades();
         this.renderStardust();
         setInterval(() => this.collectProduction(), 1000);
@@ -121,6 +118,13 @@ class Game {
         this.backgroundImage.src = useAlternateBackground ? 'backgroundv2.jpg' : 'cosmos.jpg';
         this.backgroundImage.alt = useAlternateBackground ? 'Alternatieve kosmosachtergrond' : 'Kosmosachtergrond';
         this.themeToggle.textContent = `Achtergrond: ${useAlternateBackground ? 'Deep Cosmos' : 'Cosmos'}`;
+    }
+
+    toggleStarSkin() {
+        this.useStarV2 = !this.useStarV2;
+        this.starSkinToggle.textContent = `Ster: ${this.useStarV2 ? 'Alternative' : 'Classic'}`;
+        this.cookieButton.src = this.useStarV2 ? 'starv2.png' : 'Stardust.png';
+        this.cookieButton.alt = this.useStarV2 ? 'Alternative star skin' : 'Stardust';
     }
 
     activateStarBoost() {
