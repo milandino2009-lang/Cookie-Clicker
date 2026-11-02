@@ -26,10 +26,6 @@ class Upgrade {
         this.onPurchase();
     }
 
-    onPurchase() {
-        
-    }
-
     render() {
         this.button.textContent = `${this.name}: ${this.cost} stardust`;
         this.count.textContent = this.owned;
@@ -100,7 +96,7 @@ class Game {
 
         const productionSettings = [
             { id: 'grandma', countId: 'grandmacount', name: 'Asteroids', cost: 200, costIncrease: 50, production: 3 },
-            { id: 'star', countId: 'starcOUNT', name: 'Stars', cost: 600, costIncrease: 300, production: 60 },
+            { id: 'star', countId: 'starcount', name: 'Stars', cost: 600, costIncrease: 300, production: 60 },
             { id: 'factory', countId: 'factorycount', name: 'Nebulas', cost: 1000, costIncrease: 500, production: 100 },
             { id: 'Galaxies', countId: 'Galaxiescount', name: 'Galaxies', cost: 6000, costIncrease: 1200, production: 400 },
             { id: 'Black holes', countId: 'Black holescount', name: 'Black Holes', cost: 15000, costIncrease: 2600, production: 1000 },
