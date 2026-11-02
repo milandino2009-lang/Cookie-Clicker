@@ -129,3 +129,26 @@ p {
     object-fit: cover;
     z-index: -1;
 }
+
+.star {
+	position: fixed;
+	z-index: 2;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	font-size: 60px;
+	line-height: 1;
+	color: rgb(216, 254, 2);
+	cursor: pointer;
+	text-shadow: 0 0 20px cyan;
+	animation: star-pulse 700ms ease-in-out infinite alternate;
+}
+
+@keyframes star-pulse {
+	from {
+		transform: scale(1);
+	}
+	to {
+		transform: scale(1.2);
+	}
+}

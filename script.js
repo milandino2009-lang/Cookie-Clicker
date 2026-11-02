@@ -70,6 +70,7 @@ class Game {
         this.cookiePerClick = 1;
         this.cookieButton = document.getElementById('cookiebutton');
         this.cookieCount = document.getElementById('cookiecount');
+<<<<<<< HEAD
         this.saveButton = document.getElementById('savegame');
         this.loadButton = document.getElementById('loadgame');
         this.saveStatus = document.getElementById('savestatus');
@@ -78,6 +79,16 @@ class Game {
         this.cookieButton.addEventListener('click', () => this.clickForStardust());
         this.saveButton.addEventListener('click', () => this.saveGame());
         this.loadButton.addEventListener('click', () => this.loadGame());
+=======
+        this.quicktimeStatus = document.getElementById('quicktime-status');
+        this.themeToggle = document.getElementById('theme-toggle');
+        this.backgroundImage = document.getElementById('background-image');
+        this.clickPowerMultiplier = 1;
+        this.upgrades = [];
+
+        this.cookieButton.addEventListener('click', () => this.clickForStardust());
+        this.themeToggle.addEventListener('click', () => this.toggleBackground());
+>>>>>>> df2b9e1 (achtergrond toggle en quick time event)
         this.createUpgrades();
         this.renderStardust();
         setInterval(() => this.collectProduction(), 1000);
@@ -105,8 +116,24 @@ class Game {
     }
 
     clickForStardust() {
-        this.stardust += this.cookiePerClick;
+        this.stardust += this.cookiePerClick * this.clickPowerMultiplier;
         this.renderStardust();
+    }
+
+    toggleBackground() {
+        const useAlternateBackground = this.backgroundImage.getAttribute('src') === 'cosmos.jpg';
+        this.backgroundImage.src = useAlternateBackground ? 'backgroundv2.jpg' : 'cosmos.jpg';
+        this.backgroundImage.alt = useAlternateBackground ? 'Alternatieve kosmosachtergrond' : 'Kosmosachtergrond';
+        this.themeToggle.textContent = `Achtergrond: ${useAlternateBackground ? 'Deep Cosmos' : 'Cosmos'}`;
+    }
+
+    activateStarBoost() {
+        this.clickPowerMultiplier = 100;
+        this.quicktimeStatus.textContent = 'Ster gevangen! Je click power is 10 seconden x100!';
+        window.setTimeout(() => {
+            this.clickPowerMultiplier = 1;
+            this.quicktimeStatus.textContent = '';
+        }, 10000);
     }
 
     collectProduction() {
@@ -178,5 +205,40 @@ class Game {
     }
 }
 
-new Game();
+const game = new Game();
 
+function spawnStar() {
+    const star = document.createElement('button');
+    star.type = 'button';
+    star.textContent = '★';
+    star.className = 'star';
+    star.setAttribute('aria-label', 'Klik op de ster voor 10 seconden x100 click power');
+    star.style.left = `${Math.random() * Math.max(0, window.innerWidth - 64)}px`;
+    star.style.top = `${Math.random() * Math.max(0, window.innerHeight - 64)}px`;
+
+    document.body.appendChild(star);
+    const removeStar = () => {
+        star.remove();
+    };
+
+    star.addEventListener('click', () => {
+        removeStar();
+        game.activateStarBoost();
+    }, { once: true });
+
+    window.setTimeout(() => {
+        if (star.isConnected) {
+            removeStar();
+        }
+    }, 5000);
+}
+
+function scheduleNextStar() {
+    const delay = 15000 + Math.random() * 15000;
+    window.setTimeout(() => {
+        spawnStar();
+        scheduleNextStar();
+    }, delay);
+}
+
+scheduleNextStar();
