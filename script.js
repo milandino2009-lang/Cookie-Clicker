@@ -24,6 +24,10 @@ class Upgrade {
         this.game.renderStardust();
         this.showPurchaseEffect();
         this.onPurchase();
+        this.game.renderOwnedUpgrades();
+    }
+
+    onPurchase() {
     }
 
     render() {
@@ -60,6 +64,13 @@ class ProductionUpgrade extends Upgrade {
     }
 }
 
+class ProductionBoostUpgrade extends Upgrade {
+    constructor(game, settings) {
+        super(game, settings);
+        this.multiplier = settings.multiplier;
+    }
+}
+
 class Game {
     constructor() {
         this.stardust = 0;
@@ -69,6 +80,7 @@ class Game {
         this.saveButton = document.getElementById('savegame');
         this.loadButton = document.getElementById('loadgame');
         this.saveStatus = document.getElementById('savestatus');
+        this.ownedUpgrades = document.getElementById('owned-upgrades');
         this.upgrades = [];
 
         this.cookieButton.addEventListener('click', () => this.clickForStardust());
@@ -76,8 +88,10 @@ class Game {
         this.loadButton.addEventListener('click', () => this.loadGame());
         this.createUpgrades();
         this.renderStardust();
+        this.renderOwnedUpgrades();
         setInterval(() => this.collectProduction(), 1000);
     }
+
     createUpgrades() {
         this.upgrades.push(new ClickUpgrade(this, {
             id: 'upgrade', countId: 'upgradecount', name: 'Upgrade klik', cost: 50, costIncrease: 50
@@ -98,6 +112,16 @@ class Game {
         productionSettings.forEach(settings => {
             this.upgrades.push(new ProductionUpgrade(this, settings));
         });
+
+        const productionBoostSettings = [
+            { id: 'engine-boost', countId: 'engine-boost-count', name: 'Verbeterde motoren (x1,5 productie)', cost: 2500, costIncrease: 2500, multiplier: 1.5 },
+            { id: 'stellar-core', countId: 'stellar-core-count', name: 'Stellaire kern (x2 productie)', cost: 20000, costIncrease: 10000, multiplier: 2 },
+            { id: 'cosmic-harmony', countId: 'cosmic-harmony-count', name: 'Kosmische harmonie (x3 productie)', cost: 100000, costIncrease: 50000, multiplier: 3 }
+        ];
+
+        productionBoostSettings.forEach(settings => {
+            this.upgrades.push(new ProductionBoostUpgrade(this, settings));
+        });
     }
 
     clickForStardust() {
@@ -109,13 +133,34 @@ class Game {
         const production = this.upgrades
             .filter(upgrade => upgrade instanceof ProductionUpgrade)
             .reduce((total, upgrade) => total + upgrade.produce(), 0);
+        const multiplier = this.upgrades
+            .filter(upgrade => upgrade instanceof ProductionBoostUpgrade)
+            .reduce((total, upgrade) => total * Math.pow(upgrade.multiplier, upgrade.owned), 1);
 
-        this.stardust += production;
+        this.stardust += production * multiplier;
         this.renderStardust();
     }
 
     renderStardust() {
         this.cookieCount.textContent = this.stardust;
+    }
+
+    renderOwnedUpgrades() {
+        this.ownedUpgrades.replaceChildren();
+        const ownedUpgrades = this.upgrades.filter(upgrade => upgrade.owned > 0);
+
+        if (ownedUpgrades.length === 0) {
+            const emptyMessage = document.createElement('li');
+            emptyMessage.textContent = 'Je hebt nog geen upgrades gekocht.';
+            this.ownedUpgrades.appendChild(emptyMessage);
+            return;
+        }
+
+        ownedUpgrades.forEach(upgrade => {
+            const item = document.createElement('li');
+            item.textContent = `${upgrade.name}: ${upgrade.owned}`;
+            this.ownedUpgrades.appendChild(item);
+        });
     }
 
     saveGame() {
@@ -159,6 +204,7 @@ class Game {
             }
 
             this.renderStardust();
+            this.renderOwnedUpgrades();
             this.showSaveStatus('Game loaded');
         } catch {
             this.showSaveStatus('Saved game is invalid');
@@ -175,4 +221,3 @@ class Game {
 }
 
 new Game();
-

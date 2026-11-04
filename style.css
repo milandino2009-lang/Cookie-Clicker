@@ -65,6 +65,28 @@ p {
 	margin: 4px 0 18px;
 }
 
+.owned-upgrades {
+	margin-top: 28px;
+	padding: 16px;
+	border: 1px solid rgba(255, 255, 255, 0.35);
+	border-radius: 10px;
+	background: rgba(12, 24, 54, 0.75);
+}
+
+.owned-upgrades summary {
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.owned-upgrades ul {
+	margin-bottom: 0;
+	padding-left: 20px;
+}
+
+.owned-upgrades li + li {
+	margin-top: 6px;
+}
+
 .save-controls {
 	width: min(100%, 320px);
 	margin: 28px auto 0;
