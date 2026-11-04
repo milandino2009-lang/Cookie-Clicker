@@ -14,12 +14,21 @@
 }
 
 .shop-area {
-	border-left: 1px solid #cccccc;
-	padding-left: 32px;
+	border: 1px solid rgba(115, 193, 255, 0.3);
+	border-radius: 20px;
+	padding: 24px;
 	max-height: calc(100vh - 160px);
 	overflow-y: auto;
 	padding-right: 12px;
 	box-sizing: border-box;
+	background: linear-gradient(160deg, rgba(10, 20, 54, 0.92), rgba(22, 12, 57, 0.88));
+	box-shadow: 0 0 28px rgba(63, 130, 255, 0.18), inset 0 0 24px rgba(97, 77, 196, 0.12);
+	backdrop-filter: blur(8px);
+}
+
+.shop-area h1 {
+	color: #d7eaff;
+	text-shadow: 0 0 12px rgba(91, 174, 255, 0.65);
 }
 
 button {
@@ -27,13 +36,32 @@ button {
 	margin: 12px 0 4px;
 	padding: 8px 12px;
 	cursor: pointer;
-	transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+	transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease, border-color 160ms ease;
+}
+
+.shop-area button {
+	width: 100%;
+	padding: 11px 14px;
+	border: 1px solid rgba(115, 205, 255, 0.52);
+	border-radius: 10px;
+	background: linear-gradient(135deg, rgba(24, 48, 96, 0.96), rgba(39, 28, 91, 0.96));
+	color: #f1f6ff;
+	font-weight: 600;
+	text-align: left;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25), inset 0 1px rgba(255, 255, 255, 0.08);
 }
 
 button:hover,
 button:focus-visible {
 	transform: translateY(-2px) scale(1.02);
 	box-shadow: 0 0 16px rgba(255, 220, 100, 0.8);
+}
+
+.shop-area button:hover,
+.shop-area button:focus-visible {
+	border-color: #8be4ff;
+	background: linear-gradient(135deg, rgba(35, 75, 135, 0.98), rgba(59, 39, 127, 0.98));
+	box-shadow: 0 0 18px rgba(74, 199, 255, 0.38), inset 0 0 12px rgba(108, 157, 255, 0.14);
 }
 
 button:active {
@@ -46,17 +74,17 @@ button:active {
 
 @keyframes upgrade-purchased {
 	0% {
-		background-color: #ffffff;
+		background-color: rgba(24, 48, 96, 0.96);
 		box-shadow: 0 0 0 rgba(255, 220, 100, 0);
 	}
 	45% {
-		background-color: #ffe36e;
-		box-shadow: 0 0 28px rgba(255, 220, 100, 1);
+		background-color: #6654a8;
+		box-shadow: 0 0 28px rgba(110, 211, 255, 0.95);
 		transform: scale(1.08);
 	}
 	100% {
-		background-color: initial;
-		box-shadow: 0 0 0 rgba(255, 220, 100, 0);
+		background-color: rgba(24, 48, 96, 0.96);
+		box-shadow: 0 0 0 rgba(110, 211, 255, 0);
 		transform: scale(1);
 	}
 }
@@ -135,10 +163,8 @@ p {
 	}
 
 	.shop-area {
-		border-left: 0;
-		border-top: 1px solid #cccccc;
-		padding-left: 0;
-		padding-top: 24px;
+		max-height: none;
+		padding: 20px;
 	}
 }
 
@@ -150,4 +176,27 @@ p {
     height: 100%;
     object-fit: cover;
     z-index: -1;
+}
+
+.star {
+	position: fixed;
+	z-index: 2;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	font-size: 60px;
+	line-height: 1;
+	color: rgb(216, 254, 2);
+	cursor: pointer;
+	text-shadow: 0 0 20px cyan;
+	animation: star-pulse 700ms ease-in-out infinite alternate;
+}
+
+@keyframes star-pulse {
+	from {
+		transform: scale(1);
+	}
+	to {
+		transform: scale(1.2);
+	}
 }

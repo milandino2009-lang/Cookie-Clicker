@@ -80,12 +80,23 @@ class Game {
         this.saveButton = document.getElementById('savegame');
         this.loadButton = document.getElementById('loadgame');
         this.saveStatus = document.getElementById('savestatus');
+<<<<<<< HEAD
         this.ownedUpgrades = document.getElementById('owned-upgrades');
+=======
+        this.quicktimeStatus = document.getElementById('quicktime-status');
+        this.themeToggle = document.getElementById('theme-toggle');
+        this.starSkinToggle = document.getElementById('star-skin-toggle');
+        this.backgroundImage = document.getElementById('background-image');
+        this.useStarV2 = false;
+        this.clickPowerMultiplier = 1;
+>>>>>>> origin/main
         this.upgrades = [];
 
         this.cookieButton.addEventListener('click', () => this.clickForStardust());
         this.saveButton.addEventListener('click', () => this.saveGame());
         this.loadButton.addEventListener('click', () => this.loadGame());
+        this.themeToggle.addEventListener('click', () => this.toggleBackground());
+        this.starSkinToggle.addEventListener('click', () => this.toggleStarSkin());
         this.createUpgrades();
         this.renderStardust();
         this.renderOwnedUpgrades();
@@ -125,8 +136,31 @@ class Game {
     }
 
     clickForStardust() {
-        this.stardust += this.cookiePerClick;
+        this.stardust += this.cookiePerClick * this.clickPowerMultiplier;
         this.renderStardust();
+    }
+
+    toggleBackground() {
+        const useAlternateBackground = this.backgroundImage.getAttribute('src') === 'cosmos.jpg';
+        this.backgroundImage.src = useAlternateBackground ? 'backgroundv2.jpg' : 'cosmos.jpg';
+        this.backgroundImage.alt = useAlternateBackground ? 'Alternatieve kosmosachtergrond' : 'Kosmosachtergrond';
+        this.themeToggle.textContent = `Achtergrond: ${useAlternateBackground ? 'Deep Cosmos' : 'Cosmos'}`;
+    }
+
+    toggleStarSkin() {
+        this.useStarV2 = !this.useStarV2;
+        this.starSkinToggle.textContent = `Ster: ${this.useStarV2 ? 'Alternative' : 'Classic'}`;
+        this.cookieButton.src = this.useStarV2 ? 'starv2.png' : 'Stardust.png';
+        this.cookieButton.alt = this.useStarV2 ? 'Alternative star skin' : 'Stardust';
+    }
+
+    activateStarBoost() {
+        this.clickPowerMultiplier = 100;
+        this.quicktimeStatus.textContent = 'Ster gevangen! Je click power is 10 seconden x100!';
+        window.setTimeout(() => {
+            this.clickPowerMultiplier = 1;
+            this.quicktimeStatus.textContent = '';
+        }, 10000);
     }
 
     collectProduction() {
@@ -220,4 +254,44 @@ class Game {
     }
 }
 
+<<<<<<< HEAD
 new Game();
+=======
+const game = new Game();
+
+function spawnStar() {
+    const star = document.createElement('button');
+    star.type = 'button';
+    star.textContent = '★';
+    star.className = 'star';
+    star.setAttribute('aria-label', 'Klik op de ster voor 10 seconden x100 click power');
+    star.style.left = `${Math.random() * Math.max(0, window.innerWidth - 64)}px`;
+    star.style.top = `${Math.random() * Math.max(0, window.innerHeight - 64)}px`;
+
+    document.body.appendChild(star);
+    const removeStar = () => {
+        star.remove();
+    };
+
+    star.addEventListener('click', () => {
+        removeStar();
+        game.activateStarBoost();
+    }, { once: true });
+
+    window.setTimeout(() => {
+        if (star.isConnected) {
+            removeStar();
+        }
+    }, 5000);
+}
+
+function scheduleNextStar() {
+    const delay = 15000 + Math.random() * 15000;
+    window.setTimeout(() => {
+        spawnStar();
+        scheduleNextStar();
+    }, delay);
+}
+
+scheduleNextStar();
+>>>>>>> origin/main
